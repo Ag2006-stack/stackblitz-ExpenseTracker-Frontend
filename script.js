@@ -1,14 +1,13 @@
-const API_URL = "https://sia-expencestracker-1.onrender.com/api/expenses";
+const BASE_URL = "https://sia-expencestracker-1.onrender.com";
+const API_URL = `${BASE_URL}/api/expenses`;
 
 async function loadData() {
     try {
         const response = await fetch(API_URL);
         const data = await response.json();
-        console.log("Loaded Data:", data);
         renderList(data, 'Records');
     } catch (err) {
-        console.error("Fetch Error:", err);
-        document.getElementById('display-list').innerHTML = "<h3>Check if partner's Render link is alive</h3>";
+        document.getElementById('display-list').innerHTML = "<h3>Server Error</h3>";
     }
 }
 
@@ -22,16 +21,16 @@ function renderList(data, title) {
     }
 
     data.forEach(item => {
-        const id = item.id || item._id; // Check for both 'id' and '_id'
+        const itemId = item.id || item._id;
         listDiv.innerHTML += `
             <div class="expense-item">
                 <div>
                     <strong>${item.type}</strong>: ₱${item.price} 
-                    <br><small>Status: ${item.status}</small>
+                    <br><small>Status: ${item.status || 'unpaid'}</small>
                 </div>
                 <div class="btn-group">
-                    <button class="paid-btn" onclick="updateStatus('${id}', '${item.type}', ${item.price})">Paid</button>
-                    <button class="del-btn" onclick="deleteItem('${id}')">Delete</button>
+                    <button class="paid-btn" onclick="updateStatus('${itemId}', '${item.type}', ${item.price})">Paid</button>
+                    <button class="del-btn" onclick="deleteItem('${itemId}')">Delete</button>
                 </div>
             </div>
         `;
@@ -41,19 +40,32 @@ function renderList(data, title) {
 async function addExpense() {
     const type = document.getElementById('type').value;
     const price = document.getElementById('price').value;
-    const status = document.getElementById('status').value;
+    const status = document.getElementById('status').value || "unpaid";
 
-    const response = await fetch(API_URL, {
+    if (!type || !price) return alert("Please enter Type and Price");
+
+    await fetch(API_URL, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ type, price, status })
     });
 
-    if (response.ok) {
-        loadData();
-        document.querySelectorAll('.input-group input').forEach(i => i.value = '');
-    } else {
-        console.error("Add Error:", response.status);
+    document.getElementById('type').value = '';
+    document.getElementById('price').value = '';
+    document.getElementById('status').value = '';
+    loadData();
+}
+
+async function searchExpenses() {
+    const typeQuery = document.getElementById('searchInput').value;
+    if (!typeQuery) return loadData();
+
+    try {
+        const response = await fetch(`${BASE_URL}/api/search?type=${typeQuery}`);
+        const data = await response.json();
+        renderList(data, `Results for: "${typeQuery}"`);
+    } catch (err) {
+        alert("Search failed. Ensure the search route is live.");
     }
 }
 
@@ -66,22 +78,8 @@ async function updateStatus(id, type, price) {
     loadData();
 }
 
-async function searchExpenses() {
-    const query = document.getElementById('searchInput').value;
-    if (!query) return loadData();
-
-    try {
-        const response = await fetch(`${API_URL}/search?query=${query}`);
-        const data = await response.json();
-        renderList(data, `Results for: "${query}"`);
-    } catch (err) {
-        console.error("Search Error:", err);
-        alert("Search failed. Ensure partner deployed the /search route.");
-    }
-}
-
 async function deleteItem(id) {
-    if (confirm("Delete this?")) {
+    if (confirm("Are you sure?")) {
         await fetch(`${API_URL}/${id}`, { method: 'DELETE' });
         loadData();
     }
