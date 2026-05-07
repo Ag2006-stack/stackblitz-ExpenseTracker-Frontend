@@ -10,7 +10,7 @@ body {
   background: white;
   padding: 25px;
   border-radius: 12px;
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 4px 15px rgba(0,0,0,0.1);
   width: 100%;
   max-width: 500px;
 }
@@ -28,17 +28,38 @@ input {
 button {
   width: 100%;
   padding: 12px;
-  background: #28a745;
   color: white;
   border: none;
   border-radius: 6px;
   cursor: pointer;
-  font-size: 16px;
+  font-size: 14px;
   font-weight: bold;
   margin-top: 10px;
 }
 button:hover {
-  background: #218838;
+  opacity: 0.9;
+}
+.input-group button {
+  background: #28a745;
+}
+.search-group {
+  margin: 20px 0;
+  display: flex;
+  gap: 10px;
+}
+.search-group input {
+  margin: 0;
+  flex: 2;
+}
+.search-btn {
+  flex: 1;
+  margin: 0;
+  background: #3498db;
+}
+.clear-btn {
+  flex: 1;
+  margin: 0;
+  background: #95a5a6;
 }
 .expense-item {
   border-bottom: 1px solid #eee;
@@ -47,12 +68,19 @@ button:hover {
   justify-content: space-between;
   align-items: center;
 }
+.btn-group {
+  display: flex;
+  gap: 5px;
+}
+.paid-btn {
+  background: #f39c12;
+  width: auto;
+  padding: 6px 10px;
+  margin-top: 0;
+}
 .del-btn {
   background: #dc3545;
   width: auto;
-  padding: 6px 12px;
-  font-size: 12px;
-}
-.del-btn:hover {
-  background: #c82333;
+  padding: 6px 10px;
+  margin-top: 0;
 }
