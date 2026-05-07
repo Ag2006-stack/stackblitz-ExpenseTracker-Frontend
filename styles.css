@@ -1,50 +1,88 @@
 body {
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  background: #f4f4f9;
+  font-family: Arial, sans-serif;
+  background: #f4f4f4;
+  margin: 0;
   padding: 40px;
   display: flex;
-  flex-direction: column;
-  align-items: center;
+  justify-content: center;
 }
+
 .container {
+  width: 100%;
+  max-width: 600px;
   background: white;
   padding: 25px;
-  border-radius: 12px;
-  box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-  width: 100%;
-  max-width: 500px;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0,0,0,0.1);
 }
-h1 { text-align: center; color: #333; }
+
+h1 {
+  text-align: center;
+}
+
 input {
-  width: calc(100% - 22px);
+  width: 100%;
   padding: 10px;
-  margin: 8px 0;
-  border: 1px solid #ddd;
-  border-radius: 6px;
+  margin-top: 10px;
+  box-sizing: border-box;
 }
+
 button {
   width: 100%;
   padding: 12px;
-  color: white;
-  border: none;
-  border-radius: 6px;
-  cursor: pointer;
-  font-weight: bold;
   margin-top: 10px;
+  border: none;
+  cursor: pointer;
+  color: white;
+  font-weight: bold;
+  border-radius: 5px;
 }
-button:hover { opacity: 0.9; }
-.input-group button { background: #28a745; }
-.search-group { margin: 20px 0; display: flex; gap: 10px; }
-.search-group input { margin: 0; flex: 2; }
-.search-btn { flex: 1; margin: 0; background: #3498db; }
-.clear-btn { flex: 1; margin: 0; background: #95a5a6; }
+
+.input-group button {
+  background: green;
+}
+
+.search-group {
+  display: flex;
+  gap: 10px;
+  margin-top: 20px;
+}
+
+.search-group input {
+  flex: 2;
+}
+
+.search-btn {
+  background: blue;
+  flex: 1;
+}
+
+.clear-btn {
+  background: gray;
+  flex: 1;
+}
+
 .expense-item {
-  border-bottom: 1px solid #eee;
+  border-bottom: 1px solid #ddd;
   padding: 15px 0;
   display: flex;
   justify-content: space-between;
   align-items: center;
 }
-.btn-group { display: flex; gap: 5px; }
-.paid-btn { background: #f39c12; width: auto; padding: 6px 10px; margin-top: 0; }
-.del-btn { background: #dc3545; width: auto; padding: 6px 10px; margin-top: 0; }
+
+.btn-group {
+  display: flex;
+  gap: 5px;
+}
+
+.paid-btn {
+  background: orange;
+  width: auto;
+  padding: 8px;
+}
+
+.del-btn {
+  background: red;
+  width: auto;
+  padding: 8px;
+}
