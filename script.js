@@ -1,4 +1,4 @@
-const API_URL = "https://sia-expencestracker-1.onrender.com";
+const API_URL = "https://sia-expencestracker-1.onrender.com/api/expenses";
 
 async function loadData() {
     try {
